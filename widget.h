@@ -1,15 +1,34 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+/// \file widget.h
+/// \brief Widget class
+/// \author Radianto
+/// \date 22.04.2014
 
-#include <QWidget>
+#pragma once
+
+#include <QtWidgets/QWidget>
+#include <QtCore/QDateTime>
+
+class QLabel;
 
 class Widget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    Widget(QWidget *parent = 0);
-    ~Widget();
+	Widget(QWidget* parent = 0);
+	~Widget();
+
+private slots:
+	void reset();
+
+private:
+	bool eventFilter(QObject* obj, QEvent* event);
+
+private:
+	unsigned count_;
+	// gui
+	QDateTime lastClick_;
+	QWidget* labelContainer_;
+	QLabel* label_;
 };
 
-#endif // WIDGET_H
