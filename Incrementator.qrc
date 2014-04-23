@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qrc/OpenSans-Light.ttf</file>
+        <file>qrc/JosefinSans-Thin.ttf</file>
+    </qresource>
+</RCC>

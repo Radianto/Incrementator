@@ -8,3 +8,6 @@ SOURCES += main.cpp\
         widget.cpp
 
 HEADERS  += widget.h
+
+RESOURCES += \
+    Incrementator.qrc

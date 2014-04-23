@@ -4,10 +4,12 @@
 /// \date 22.04.2014
 
 #include "widget.h"
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
+#include <QtGui/QFontDatabase>
 #include <QtCore/QEvent>
 
 Widget::Widget(QWidget* parent)
@@ -26,14 +28,35 @@ Widget::Widget(QWidget* parent)
 	labelContainer_->installEventFilter(this);
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
-	layout->addWidget(new QLabel("<b>" + tr("Incrementator")+ "</b>"), 0 , Qt::AlignHCenter);
-	layout->addWidget(new QLabel(tr("Created by Radianto [www.radianto.ru]")), 0 , Qt::AlignHCenter);
+	layout->addWidget(new QLabel("<b>" + tr("Incrementator")+ "</b>"), 0, Qt::AlignHCenter);
+	QLabel* authorLabel = new QLabel(tr("Created by Radianto [www.radianto.ru]"));
+	layout->addWidget(authorLabel, 0 , Qt::AlignHCenter);
 	layout->addWidget(labelContainer_, 2);
 	QPushButton* button = new QPushButton(tr("Reset"), this);
 	connect(button, SIGNAL(clicked()), SLOT(reset()));
 	layout->addWidget(button, 0);
 
 	this->setWindowTitle(tr("Incrementator"));
+
+	QFont font = QApplication::font();
+
+	int fontId = QFontDatabase::addApplicationFont(":/qrc/OpenSans-Light.ttf");
+	if (fontId != -1)
+		font = QFont(QFontDatabase::applicationFontFamilies(fontId).first());
+
+	font.setPointSize(font.pointSize()+20);
+	QApplication::setFont(font);
+
+	font.setPointSize(font.pointSize()-20);
+	authorLabel->setFont(font);
+
+	fontId = QFontDatabase::addApplicationFont(":/qrc/JosefinSans-Thin.ttf");
+	if (fontId != -1)
+		font = QFont(QFontDatabase::applicationFontFamilies(fontId).first());
+
+	font.setPointSize(font.pointSize()+180);
+
+	label_->setFont(font);
 }
 
 Widget::~Widget()
@@ -45,14 +68,14 @@ void Widget::reset()
 	label_->setText(QString::number(count_ = 0, 16));
 }
 
-bool Widget::eventFilter(QObject *obj, QEvent *event)
+bool Widget::eventFilter(QObject* obj, QEvent* event)
 {
 	if(obj == labelContainer_ && event->type() == QEvent::MouseButtonPress)
 	{
 		// timeout without click
 		if(lastClick_.msecsTo(QDateTime::currentDateTime()) > 100)
 		{
-			label_->setText(QString::number(++count_,16));
+			label_->setText(QString::number(++count_, 16));
 			lastClick_ = QDateTime::currentDateTime();
 		}
 		return true;
