@@ -29,7 +29,7 @@ Widget::Widget(QWidget* parent)
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->addWidget(new QLabel("<b>" + tr("Incrementator")+ "</b>"), 0, Qt::AlignHCenter);
-	QLabel* authorLabel = new QLabel(tr("Created by Radianto [www.radianto.ru]"));
+	QLabel* authorLabel = new QLabel(tr("Created by Radianto") + " [www.radianto.ru]");
 	layout->addWidget(authorLabel, 0 , Qt::AlignHCenter);
 	layout->addWidget(labelContainer_, 2);
 	QPushButton* button = new QPushButton(tr("Reset"), this);
